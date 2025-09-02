@@ -1,0 +1,322 @@
+
+import os
+import zipfile
+
+# Define project folder
+project_path = '/mnt/data/arewa-business-starter'
+os.makedirs(project_path, exist_ok=True)
+
+# Create folders
+os.makedirs(os.path.join(project_path, 'css'), exist_ok=True)
+os.makedirs(os.path.join(project_path, 'js'), exist_ok=True)
+os.makedirs(os.path.join(project_path, 'data'), exist_ok=True)
+os.makedirs(os.path.join(project_path, 'assets'), exist_ok=True)
+
+# index.html (homepage)
+index_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arewa Business</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Arewa Business</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="directory.html">Directory</a>
+      <a href="news.html">News</a>
+      <a href="submit.html">Submit Business</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Discover Businesses in Northern Nigeria</h2>
+    <input type="text" id="search" placeholder="Search businesses...">
+  </section>
+
+  <section id="featured">
+    <h3>Featured Businesses</h3>
+    <div id="featured-list"></div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Arewa Business. All Rights Reserved.</p>
+  </footer>
+  <script src="js/script.js"></script>
+</body>
+</html>"""
+
+# directory.html
+directory_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Directory - Arewa Business</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Business Directory</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="directory.html">Directory</a>
+      <a href="news.html">News</a>
+      <a href="submit.html">Submit Business</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <section>
+    <input type="text" id="directory-search" placeholder="Search businesses...">
+    <select id="category-filter">
+      <option value="">All Categories</option>
+      <option value="Food">Food</option>
+      <option value="Fashion">Fashion</option>
+      <option value="Tech">Tech</option>
+    </select>
+    <div id="directory-list"></div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Arewa Business</p>
+  </footer>
+  <script src="js/script.js"></script>
+</body>
+</html>"""
+
+# business.html
+business_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Profile - Arewa Business</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Business Profile</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="directory.html">Directory</a>
+      <a href="news.html">News</a>
+      <a href="submit.html">Submit Business</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <section id="business-details">
+    <h2 id="business-name"></h2>
+    <p id="business-description"></p>
+    <h3>Services</h3>
+    <ul id="business-services"></ul>
+    <h3>Contact</h3>
+    <p id="business-contact"></p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Arewa Business</p>
+  </footer>
+  <script src="js/script.js"></script>
+</body>
+</html>"""
+
+# submit.html
+submit_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Business - Arewa Business</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Submit Your Business</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="directory.html">Directory</a>
+      <a href="news.html">News</a>
+      <a href="submit.html">Submit Business</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <section>
+    <form action="https://formspree.io/f/mexample" method="POST">
+      <label>Business Name: <input type="text" name="name" required></label><br>
+      <label>Email: <input type="email" name="email" required></label><br>
+      <label>Category: <input type="text" name="category"></label><br>
+      <label>Description:<br><textarea name="description"></textarea></label><br>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Arewa Business</p>
+  </footer>
+</body>
+</html>"""
+
+# about.html
+about_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Arewa Business</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>About Arewa Business</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="directory.html">Directory</a>
+      <a href="news.html">News</a>
+      <a href="submit.html">Submit Business</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <section>
+    <p>Arewa Business is a platform to showcase and promote businesses in Northern Nigeria.</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Arewa Business</p>
+  </footer>
+</body>
+</html>"""
+
+# news.html
+news_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News - Arewa Business</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Arewa Business News</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="directory.html">Directory</a>
+      <a href="news.html">News</a>
+      <a href="submit.html">Submit Business</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <section>
+    <article>
+      <h2>Welcome to Arewa Business</h2>
+      <p>This is where news and updates about local businesses will appear.</p>
+    </article>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Arewa Business</p>
+  </footer>
+</body>
+</html>"""
+
+# styles.css
+styles_css = """body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f9f9f9;
+}
+header {
+  background: #004d40;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+}
+.hero {
+  background: #e0f2f1;
+  padding: 40px;
+  text-align: center;
+}
+section {
+  padding: 20px;
+}
+footer {
+  background: #004d40;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-top: 20px;
+}"""
+
+# script.js
+script_js = """document.addEventListener("DOMContentLoaded", () => {
+  const featured = document.getElementById("featured-list");
+  if (featured) {
+    featured.innerHTML = "<p>Sample Business 1</p><p>Sample Business 2</p>";
+  }
+});"""
+
+# businesses.json
+businesses_json = """[
+  {
+    "id": "biz1",
+    "name": "Sample Restaurant",
+    "category": "Food",
+    "location": "Kano",
+    "description": "A great place for local dishes.",
+    "services": ["Dine-in", "Takeaway"],
+    "contact": "08012345678"
+  },
+  {
+    "id": "biz2",
+    "name": "Tech Hub",
+    "category": "Tech",
+    "location": "Abuja",
+    "description": "Innovation and co-working space.",
+    "services": ["Training", "Workspace"],
+    "contact": "08098765432"
+  }
+]"""
+
+# Write files
+files_content = {
+    "index.html": index_html,
+    "directory.html": directory_html,
+    "business.html": business_html,
+    "submit.html": submit_html,
+    "about.html": about_html,
+    "news.html": news_html,
+    "css/styles.css": styles_css,
+    "js/script.js": script_js,
+    "data/businesses.json": businesses_json
+}
+
+for filepath, content in files_content.items():
+    full_path = os.path.join(project_path, filepath)
+    os.makedirs(os.path.dirname(full_path), exist_ok=True)
+    with open(full_path, "w") as f:
+        f.write(content)
+
+# Zip folder
+zip_filename = '/mnt/data/arewa-business-starter.zip'
+with zipfile.ZipFile(zip_filename, 'w') as zipf:
+    for root, dirs, files in os.walk(project_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            zipf.write(file_path, os.path.relpath(file_path, project_path))
+
+zip_filename
